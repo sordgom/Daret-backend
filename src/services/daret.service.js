@@ -5,9 +5,8 @@ const config = require('../configs/general.config');
 async function getMultiple(page = 1){
   const offset = helper.getOffset(page, config.listPerPage);
   const rows = await db.query(
-    `SELECT id, name, released_year, githut_rank, pypl_rank, tiobe_rank 
-    FROM daret LIMIT ?,?`, 
-    [offset, config.listPerPage]
+    `SELECT *
+    FROM daret LIMIT ${offset} , ${config.listPerPage} ;`,
   );
   const data = helper.emptyOrRows(rows);
   const meta = {page};
@@ -18,45 +17,39 @@ async function getMultiple(page = 1){
   }
 }
 
-async function create(programmingLanguage){
+async function create(daret){
   const result = await db.query(
     `INSERT INTO daret 
-    (name, released_year, githut_rank, pypl_rank, tiobe_rank) 
+    (id, address) 
     VALUES 
-    (?, ?, ?, ?, ?)`, 
+    (?, ?)`, 
     [
-      programmingLanguage.name, programmingLanguage.released_year,
-      programmingLanguage.githut_rank, programmingLanguage.pypl_rank,
-      programmingLanguage.tiobe_rank
+      daret.id, daret.address,
     ]
   );
 
-  let message = 'Error in creating programming language';
+  let message = 'Error in creating daret';
 
   if (result.affectedRows) {
-    message = 'Programming language created successfully';
+    message = 'Daret created successfully';
   }
 
   return {message};
 }
 
-async function update(id, programmingLanguage){
+async function update(id, daret){
   const result = await db.query(
     `UPDATE daret 
-    SET name=?, released_year=?, githut_rank=?, 
-    pypl_rank=?, tiobe_rank=? 
-    WHERE id=?`, 
+    SET id=?, address=?`, 
     [
-      programmingLanguage.name, programmingLanguage.released_year,
-      programmingLanguage.githut_rank, programmingLanguage.pypl_rank,
-      programmingLanguage.tiobe_rank, id
+      daret.id, daret.address, id
     ]
   );
 
-  let message = 'Error in updating programming language';
+  let message = 'Error in updating daret';
 
   if (result.affectedRows) {
-    message = 'Programming language updated successfully';
+    message = 'Daret updated successfully';
   }
 
   return {message};
@@ -68,10 +61,10 @@ async function remove(id){
     [id]
   );
 
-  let message = 'Error in deleting programming language';
+  let message = 'Error in deleting Daret';
 
   if (result.affectedRows) {
-    message = 'Programming language deleted successfully';
+    message = 'Daret deleted successfully';
   }
 
   return {message};
