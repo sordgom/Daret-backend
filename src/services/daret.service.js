@@ -20,11 +20,11 @@ async function getMultiple(page = 1){
 async function create(daret){
   const result = await db.query(
     `INSERT INTO daret 
-    (id, address) 
+    (address) 
     VALUES 
-    (?, ?)`, 
+    (?)`, 
     [
-      daret.id, daret.address,
+      daret.address,
     ]
   );
 

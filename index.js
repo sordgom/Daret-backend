@@ -1,3 +1,4 @@
+require('dotenv').config(); // enables loading .env vars
 const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
@@ -6,6 +7,9 @@ const daretRouter = require('./src/routes/daret.route');
 const cors = require('cors');
 const path = require('path');
 
+app.use(cors({
+  origin: '*' //Allow all origins
+}));
 
 app.use(bodyParser.json());
 app.use(
@@ -28,8 +32,6 @@ app.use((err, req, res, next) => {
   
   return;
 });
-
-app.use(cors({ origin: process.env.CLIENT_URL }));
 
 // For heroku deployment
 if (process.env.NODE_ENV === 'production') {
