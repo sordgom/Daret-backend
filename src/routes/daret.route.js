@@ -2,16 +2,16 @@ const express = require('express');
 const router = express.Router();
 const daretController = require('../controllers/daret.controller');
 
-/* GET programming languages. */
+/* GET daret. */
 router.get('/', daretController.get);
   
-/* POST programming language */
+/* POST daret */
 router.post('/', daretController.create);
 
-/* PUT programming language */
+/* PUT daret  */
 router.put('/:id', daretController.update);
 
-/* DELETE programming language */
+/* DELETE daret  */
 router.delete('/:id', daretController.remove);
 
 module.exports = router;

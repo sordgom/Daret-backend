@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const app = express();
 const port = process.env.PORT || 8080;
 const daretRouter = require('./src/routes/daret.route');
+const campaignRouter = require('./src/routes/campaign.route');
 const cors = require('cors');
 const path = require('path');
 
@@ -23,6 +24,7 @@ app.get('/', (req, res) => {
 })
 
 app.use('/daret', daretRouter);
+app.use('/campaign',campaignRouter);
 
 /* Error handler middleware */
 app.use((err, req, res, next) => {
