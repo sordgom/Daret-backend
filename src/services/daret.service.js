@@ -55,10 +55,10 @@ async function update(id, daret){
   return {message};
 }
 
-async function remove(id){
+async function remove(address){
   const result = await db.query(
-    `DELETE FROM daret WHERE id=?`, 
-    [id]
+    `DELETE FROM daret WHERE address=?`, 
+    [address]
   );
 
   let message = 'Error in deleting Daret';
