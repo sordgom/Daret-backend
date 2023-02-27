@@ -20,11 +20,11 @@ async function getMultiple(page = 1){
 async function create(campaign){
   const result = await db.query(
     `INSERT INTO campaign 
-    (address) 
+    (campaignId) 
     VALUES 
     (?)`, 
     [
-      campaign.address,
+      campaign.campaignId,
     ]
   );
 
@@ -40,9 +40,10 @@ async function create(campaign){
 async function update(id, campaign){
   const result = await db.query(
     `UPDATE campaign 
-    SET id=?, address=?`, 
+    SET campaignId=?
+    WHERE id=?`,
     [
-      campaign.id, campaign.address, id
+      campaign.campaignId, id
     ]
   );
 

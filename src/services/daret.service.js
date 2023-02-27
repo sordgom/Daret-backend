@@ -40,9 +40,10 @@ async function create(daret){
 async function update(id, daret){
   const result = await db.query(
     `UPDATE daret 
-    SET id=?, address=?`, 
+    SET address=?
+    WHERE id=?`,
     [
-      daret.id, daret.address, id
+      daret.address, id
     ]
   );
 
