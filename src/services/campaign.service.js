@@ -17,14 +17,28 @@ async function getMultiple(page = 1){
   }
 }
 
+
+async function getByAddress(address) {
+  const rows = await db.query(
+    'SELECT * FROM campaign WHERE address = ?',
+    [address]
+  );
+  const data = helper.emptyOrRows(rows);
+  return data;
+}
+
 async function create(campaign){
   const result = await db.query(
     `INSERT INTO campaign 
-    (campaignId) 
+    (title, description, creator, completed, address) 
     VALUES 
-    (?)`, 
+    (?, ?, ?, ?, ?)`, 
     [
-      campaign.campaignId,
+      campaign.title,
+      campaign.description,
+      campaign.creator,
+      campaign.completed,
+      campaign.address,
     ]
   );
 
@@ -36,14 +50,19 @@ async function create(campaign){
 
   return {message};
 }
-
+  
 async function update(id, campaign){
   const result = await db.query(
     `UPDATE campaign 
-    SET campaignId=?
+    SET title=?, description=?, creator=?, completed=?, address=?
     WHERE id=?`,
     [
-      campaign.campaignId, id
+      campaign.title,
+      campaign.description,
+      campaign.creator,
+      campaign.completed,
+      campaign.address,
+      id
     ]
   );
 
@@ -56,7 +75,7 @@ async function update(id, campaign){
   return {message};
 }
 
-async function remove(id){
+async function remove(id) {
   const result = await db.query(
     `DELETE FROM campaign WHERE id=?`, 
     [id]
@@ -75,5 +94,6 @@ module.exports = {
   getMultiple,
   create,
   update,
-  remove
+  remove,
+  getByAddress // Add this line
 }

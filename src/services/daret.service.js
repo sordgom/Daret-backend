@@ -6,7 +6,7 @@ async function getMultiple(page = 1){
   const offset = helper.getOffset(page, config.listPerPage);
   const rows = await db.query(
     `SELECT *
-    FROM daret LIMIT ${offset} , ${config.listPerPage} ;`,
+    FROM daret LIMIT ${offset} , ${config.listPerPage};`,
   );
   const data = helper.emptyOrRows(rows);
   const meta = {page};
@@ -17,14 +17,54 @@ async function getMultiple(page = 1){
   }
 }
 
+async function getMultiple2(page = 1, userAddress = null) {
+  const offset = helper.getOffset(page, config.listPerPage);
+  
+  let query = `SELECT * FROM daret`;
+  const queryParams = [];
+
+  if (userAddress) {
+    query += ` WHERE id IN (
+      SELECT daret_invite.daret_id
+      FROM daret_invite
+      JOIN invitee ON daret_invite.id = invitee.daret_invite_id
+      WHERE invitee.address = ?
+    ) OR invitation_required = 1`;
+    queryParams.push(userAddress);
+  }
+
+  const rows = await db.query(query, queryParams);
+  const data = helper.emptyOrRows(rows);
+  const meta = { page };
+
+  return {
+    data,
+    meta
+  }
+}
+
+async function getByAddress(address) {
+  const rows = await db.query(
+    'SELECT * FROM daret WHERE address = ?',
+    [address]
+  );
+  const data = helper.emptyOrRows(rows);
+  return data;
+}
+
 async function create(daret){
   const result = await db.query(
     `INSERT INTO daret 
-    (address) 
+    (title, description, creator, completed, address, invitation_required) 
     VALUES 
-    (?)`, 
+    (?, ?, ?, ?, ?, ?)`, 
     [
+      daret.title,
+      daret.description,
+      daret.creator,
+      daret.completed,
       daret.address,
+      daret.invitation_required
     ]
   );
 
@@ -32,18 +72,24 @@ async function create(daret){
 
   if (result.affectedRows) {
     message = 'Daret created successfully';
+    
   }
 
-  return {message};
+  return {message, id: result.insertId };
 }
 
 async function update(id, daret){
   const result = await db.query(
     `UPDATE daret 
-    SET address=?
+    SET title=?, description=?, creator=?, completed=?, address=?
     WHERE id=?`,
     [
-      daret.address, id
+      daret.title,
+      daret.description,
+      daret.creator,
+      daret.completed,
+      daret.address,
+      id
     ]
   );
 
@@ -56,10 +102,10 @@ async function update(id, daret){
   return {message};
 }
 
-async function remove(address){
+async function remove(id) {
   const result = await db.query(
-    `DELETE FROM daret WHERE address=?`, 
-    [address]
+    `DELETE FROM daret WHERE id=?`, 
+    [id]
   );
 
   let message = 'Error in deleting Daret';
@@ -73,7 +119,9 @@ async function remove(address){
 
 module.exports = {
   getMultiple,
+  getMultiple2,
   create,
   update,
-  remove
+  remove,
+  getByAddress // Add this line
 }
