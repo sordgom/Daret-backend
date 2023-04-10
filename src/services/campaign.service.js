@@ -65,6 +65,28 @@ async function update(id, campaign){
       id
     ]
   );
+  
+
+  let message = 'Error in updating campaign';
+
+  if (result.affectedRows) {
+    message = 'campaign updated successfully';
+  }
+
+  return {message};
+}
+
+async function updateCompleted(address, campaign){
+  const result = await db.query(
+    `UPDATE campaign 
+    SET completed=?
+    WHERE address=?`,
+    [
+      campaign.completed,
+      address
+    ]
+  );
+  
 
   let message = 'Error in updating campaign';
 
@@ -94,6 +116,7 @@ module.exports = {
   getMultiple,
   create,
   update,
+  updateCompleted,
   remove,
   getByAddress // Add this line
 }

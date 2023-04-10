@@ -10,7 +10,7 @@ router.get('/:address', campaignController.getByAddress);
 router.post('/', campaignController.create);
 
 /* PUT campaign  */
-router.put('/:id', campaignController.update);
+router.put('/:address', campaignController.update);
 
 /* DELETE campaign  */
 router.delete('/:id', campaignController.remove);

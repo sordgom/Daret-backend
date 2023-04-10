@@ -28,6 +28,7 @@ async function getByAddress(req, res, next) {
   }
 }
 
+
 async function create(req, res, next) {
   try {
     const daretData = {
@@ -48,14 +49,7 @@ async function create(req, res, next) {
 
 async function update(req, res, next) {
   try {
-    const daretData = {
-      title: req.body.title,
-      description: req.body.description,
-      creator: req.body.creator,
-      completed: req.body.completed,
-      address: req.body.address,
-    };
-    res.json(await daret.update(req.params.id, daretData));
+      res.json(await daret.updateCompleted(req.params.address, req.body));
   } catch (err) {
     console.error(`Error while updating daret`, err.message);
     next(err);

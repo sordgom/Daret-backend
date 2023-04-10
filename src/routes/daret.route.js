@@ -11,7 +11,7 @@ router.get('/:address', daretController.getByAddress);
 router.post('/', daretController.create);
 
 /* PUT daret  */
-router.put('/:id', daretController.update);
+router.put('/:address', daretController.update);
 
 /* DELETE daret  */
 router.delete('/:id', daretController.remove);

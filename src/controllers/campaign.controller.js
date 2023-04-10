@@ -29,7 +29,7 @@ async function create(req, res, next) {
 
 async function update(req, res, next) {
   try {
-    res.json(await campaign.update(req.params.id, req.body));
+    res.json(await campaign.updateCompleted(req.params.address, req.body));
   } catch (err) {
     console.error(`Error while updating campaigns`, err.message);
     next(err);

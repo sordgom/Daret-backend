@@ -102,6 +102,26 @@ async function update(id, daret){
   return {message};
 }
 
+async function updateCompleted(address, daret){
+  console.log(daret)
+  const result = await db.query(
+    `UPDATE daret 
+    SET completed=?
+    WHERE address=?`,
+    [
+      daret.completed,
+      address
+    ]
+  );  
+  
+  let message = 'Error in updating daret';
+
+  if (result.affectedRows) {
+    message = 'daret updated successfully';
+  }
+
+  return {message};
+  }
 async function remove(id) {
   const result = await db.query(
     `DELETE FROM daret WHERE id=?`, 
@@ -123,5 +143,6 @@ module.exports = {
   create,
   update,
   remove,
-  getByAddress // Add this line
+  getByAddress,
+  updateCompleted, // Add this line
 }
