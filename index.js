@@ -5,6 +5,7 @@ const app = express();
 const port = process.env.PORT || 8080;
 const daretRouter = require('./src/routes/daret.route');
 const campaignRouter = require('./src/routes/campaign.route');
+const faucetRouter = require('./src/routes/faucet.route');
 const cors = require('cors');
 const path = require('path');
 
@@ -25,13 +26,13 @@ app.get('/', (req, res) => {
 
 app.use('/daret', daretRouter);
 app.use('/campaign',campaignRouter);
+app.use('/faucet',faucetRouter);
 
 /* Error handler middleware */
 app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;
   console.error(err.message, err.stack);
   res.status(statusCode).json({'message': err.message});
-  
   return;
 });
 
