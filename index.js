@@ -9,9 +9,22 @@ const faucetRouter = require('./src/routes/faucet.route');
 const cors = require('cors');
 const path = require('path');
 
-app.use(cors({
-  origin: '*' //Allow all origins
-}));
+// Middleware to set CORS headers
+app.use((req, res, next) => {
+  // Allow any origin to access the resources
+  res.header('Access-Control-Allow-Origin', '*');
+  // Allowed request methods
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  // Allowed request headers
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+  
+  // Handle preflight requests
+  if (req.method === 'OPTIONS') {
+    res.sendStatus(200);
+  } else {
+    next();
+  }
+});
 
 app.use(bodyParser.json());
 app.use(
