@@ -17,7 +17,7 @@ async function mine(req, res) {
     try {
       web3.utils.toChecksumAddress(recipient);
   
-      const value = web3.utils.toWei("0.001", "ether"); // Amount to send
+      const value = web3.utils.toWei("0.01", "ether"); // Amount to send
       const gasLimit = 1000000;
   
       const tx = {
