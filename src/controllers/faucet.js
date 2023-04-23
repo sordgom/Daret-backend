@@ -64,8 +64,7 @@ const processDeposit = async (transactionHash) => {
   console.log("Transaction mined");
 
   console.log("Waiting for status to change to RELAYED");
-  console.log(optimismSDK.MessageStatus.RELAYED)
-  console.log(transactionHash)
+  await delay(90000); // Add a 30 seconds delay
   await crossChainMessenger.waitForMessageStatus(transactionHash, optimismSDK.MessageStatus.RELAYED);
 
   await reportBalances();
