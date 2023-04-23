@@ -45,23 +45,28 @@ const reportBalances = async () => {
   console.log(`On L1:${l1Balance} Gwei    On L2:${l2Balance} Gwei`)
 }    // reportBalances
 
-//0.01 = 1n * thausandth
 const depositETH = async (amount, to) => {
-    await setup();
-    console.log("Deposit ETH");
-    await reportBalances();
-    const start = new Date();
+  await setup();
+  console.log("Deposit ETH");
+  await reportBalances();
 
-    const response = await crossChainMessenger.depositETH(amount, {recipient: to});
-    console.log(`Transaction hash (on L1): ${response.hash}`);
-    await response.wait();
-    console.log("Waiting for status to change to RELAYED");
-    console.log(`Time so far ${(new Date() - start) / 1000} seconds`);
-    await crossChainMessenger.waitForMessageStatus(response.hash, optimismSDK.MessageStatus.RELAYED);
-  
-    await reportBalances();
-    console.log(`depositETH took ${(new Date() - start) / 1000} seconds\n\n`);
-}; // depositETH()
+  const response = await crossChainMessenger.depositETH(amount, { recipient: to });
+  console.log(`Transaction hash (on L1): ${response.hash}`);
+
+  return response.hash;
+};
+
+const processDeposit = async (transactionHash) => {
+  console.log("Waiting for transaction to be mined");
+  const receipt = await crossChainMessenger.l1Signer.provider.waitForTransaction(transactionHash);
+  console.log("Transaction mined");
+
+  console.log("Waiting for status to change to RELAYED");
+  await crossChainMessenger.waitForMessageStatus(transactionHash, optimismSDK.MessageStatus.RELAYED);
+
+  await reportBalances();
+  console.log("depositETH completed");
+};
 
 const withdrawETH = async () => { 
   console.log("Withdraw ETH")
@@ -100,6 +105,7 @@ const withdrawETH = async () => {
   
 module.exports = {
     depositETH,
+    processDeposit,
     withdrawETH
 };
 
