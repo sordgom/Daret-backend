@@ -56,12 +56,15 @@ const depositETH = async (amount, to) => {
   return response.hash;
 };
 
+const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
 const processDeposit = async (transactionHash) => {
   console.log("Waiting for transaction to be mined");
   const receipt = await crossChainMessenger.l1Signer.provider.waitForTransaction(transactionHash);
   console.log("Transaction mined");
 
   console.log("Waiting for status to change to RELAYED");
+  await delay(30000); // Add a 30 seconds delay
   await crossChainMessenger.waitForMessageStatus(transactionHash, optimismSDK.MessageStatus.RELAYED);
 
   await reportBalances();
