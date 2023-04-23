@@ -8,7 +8,8 @@
     "test": "jest"
   },
   "engines": {
-      "npm" : "^9.6.1"
+      "npm" : "^9.6.1",
+      "node" : "^18.14.1"
   },
   "author": "",
   "license": "ISC",
