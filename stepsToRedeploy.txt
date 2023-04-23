@@ -1,0 +1,9 @@
+1- push changes to master
+2- eb deploy
+3- try to ssh 
+4- update env variables in the AWS console
+
+
+//To recreate
+1-  create environment in elastic beans
+2- add env variables
