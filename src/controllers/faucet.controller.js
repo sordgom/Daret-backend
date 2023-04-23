@@ -9,7 +9,7 @@ const mine = async (req, res) => {
       return res.status(400).json({ message: 'Invalid address provided.' });
     }
 
-    const amount = 1n * 10n ** 16n; // 0.01 ETH in wei
+    const amount = 5n * 10n ** 15n; // 0.005 ETH in wei
 
     const transaction = await faucet.depositETH(amount, address);
 
