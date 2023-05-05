@@ -6,7 +6,7 @@ async function getMultiple(page = 1){
   const offset = helper.getOffset(page, config.listPerPage);
   const rows = await db.query(
     `SELECT *
-    FROM campaign LIMIT ${offset} , ${config.listPerPage} ;`,
+    FROM campaign OFFSET ${offset} LIMIT ${config.listPerPage}`,
   );
   const data = helper.emptyOrRows(rows);
   const meta = {page};
@@ -17,10 +17,9 @@ async function getMultiple(page = 1){
   }
 }
 
-
 async function getByAddress(address) {
   const rows = await db.query(
-    'SELECT * FROM campaign WHERE address = ?',
+    'SELECT * FROM campaign WHERE address = $1',
     [address]
   );
   const data = helper.emptyOrRows(rows);
@@ -32,7 +31,7 @@ async function create(campaign){
     `INSERT INTO campaign 
     (title, description, creator, completed, address) 
     VALUES 
-    (?, ?, ?, ?, ?)`, 
+    ($1, $2, $3, $4, $5)`, 
     [
       campaign.title,
       campaign.description,
@@ -44,7 +43,7 @@ async function create(campaign){
 
   let message = 'Error in creating campaign';
 
-  if (result.affectedRows) {
+  if (result.rowCount) {
     message = 'campaign created successfully';
   }
 
@@ -54,8 +53,8 @@ async function create(campaign){
 async function update(id, campaign){
   const result = await db.query(
     `UPDATE campaign 
-    SET title=?, description=?, creator=?, completed=?, address=?
-    WHERE id=?`,
+    SET title=$1, description=$2, creator=$3, completed=$4, address=$5
+    WHERE id=$6`,
     [
       campaign.title,
       campaign.description,
@@ -69,7 +68,7 @@ async function update(id, campaign){
 
   let message = 'Error in updating campaign';
 
-  if (result.affectedRows) {
+  if (result.rowCount) {
     message = 'campaign updated successfully';
   }
 
@@ -79,8 +78,8 @@ async function update(id, campaign){
 async function updateCompleted(address, campaign){
   const result = await db.query(
     `UPDATE campaign 
-    SET completed=?
-    WHERE address=?`,
+    SET completed=$1
+    WHERE address=$2`,
     [
       campaign.completed,
       address
@@ -90,7 +89,7 @@ async function updateCompleted(address, campaign){
 
   let message = 'Error in updating campaign';
 
-  if (result.affectedRows) {
+  if (result.rowCount) {
     message = 'campaign updated successfully';
   }
 
@@ -99,13 +98,13 @@ async function updateCompleted(address, campaign){
 
 async function remove(id) {
   const result = await db.query(
-    `DELETE FROM campaign WHERE id=?`, 
+    `DELETE FROM campaign WHERE id=$1`, 
     [id]
   );
 
   let message = 'Error in deleting campaign';
 
-  if (result.affectedRows) {
+  if (result.rowCount) {
     message = 'campaign deleted successfully';
   }
 

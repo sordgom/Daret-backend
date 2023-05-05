@@ -1,5 +1,5 @@
 # Backend for Daret
-This repository contains the backend for Daret project. It is a Node.js application that uses Express as a web framework and MySQL as a database.  It is deployed on AWS Elastic Beanstalk.
+This repository contains the backend for Daret project. It is a Node.js application that uses Express as a web framework and MySQL as a database.  It is deployed on Heroku.
 
 ## Getting Started
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
