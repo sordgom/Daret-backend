@@ -68,7 +68,7 @@ async function update(id, campaign){
 
   let message = 'Error in updating campaign';
 
-  if (result.rowCount) {
+  if (result.length) {
     message = 'campaign updated successfully';
   }
 

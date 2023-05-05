@@ -8,6 +8,7 @@ const campaignRouter = require('./src/routes/campaign.route');
 const faucetRouter = require('./src/routes/faucet.route');
 const cors = require('cors');
 const path = require('path');
+const supabase = require('./supabase');
 
 app.use(cors({
   origin: '*' //Allow all origins
@@ -23,6 +24,12 @@ app.use(
 app.get('/', (req, res) => {
   res.json({'message': 'ok'});
 })
+
+app.use((req, res, next) => {
+  req.supabase = supabase;
+  next();
+});
+
 
 app.use('/daret', daretRouter);
 app.use('/campaign',campaignRouter);

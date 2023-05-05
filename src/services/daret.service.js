@@ -70,12 +70,12 @@ async function create(daret){
 
   let message = 'Error in creating daret';
 
-  if (result.rowCount) {
+  if (result.length) {
     message = 'Daret created successfully';
     
   }
 
-  return {message, id: result.rows[0].id };
+  return {message, id: result[0].id };
 }
 
 async function update(id, daret){
