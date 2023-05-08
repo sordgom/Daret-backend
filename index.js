@@ -2,7 +2,7 @@ require('dotenv').config(); // enables loading .env vars
 const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
-const port = process.env.PORT || 8080;
+const port = process.env.PORT;
 const daretRouter = require('./src/routes/daret.route');
 const campaignRouter = require('./src/routes/campaign.route');
 const faucetRouter = require('./src/routes/faucet.route');
