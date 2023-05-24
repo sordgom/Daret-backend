@@ -5,7 +5,8 @@ const daretInviteController = require('../controllers/daretInvite.controller');
 
 /* GET daret. */
 router.get('/', daretController.get2);
-router.get('/:address', daretController.getByAddress);
+router.get('/address/:address', daretController.getByAddress);
+router.get('/user/:user', daretController.getByUser);
 
 /* POST daret */
 router.post('/', daretController.create);

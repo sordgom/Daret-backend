@@ -45,8 +45,17 @@ async function getMultiple2(page = 1, userAddress = null) {
 
 async function getByAddress(address) {
   const rows = await db.query(
-    'SELECT * FROM daret WHERE creator = $1',
+    'SELECT * FROM daret WHERE address = $1',
     [address]
+  );
+  const data = helper.emptyOrRows(rows);
+  return data;
+}
+
+async function getByUser(user) {
+  const rows = await db.query(
+    'SELECT * FROM campaign WHERE creator = $1',
+    [user]
   );
   const data = helper.emptyOrRows(rows);
   return data;
@@ -145,5 +154,6 @@ module.exports={
   update,
   remove,
   getByAddress,
+  getByUser,
   updateCompleted, // Add this line
 }

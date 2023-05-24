@@ -4,7 +4,8 @@ const campaignController = require('../controllers/campaign.controller');
 
 /* GET campaign . */
 router.get('/', campaignController.get);
-router.get('/:address', campaignController.getByAddress);
+router.get('/address/:address', campaignController.getByAddress);
+router.get('/user/:user', campaignController.getByUser);
 
 /* POST campaign  */
 router.post('/', campaignController.create);

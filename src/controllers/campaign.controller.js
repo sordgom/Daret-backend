@@ -18,6 +18,15 @@ async function getByAddress(req, res, next) {
   }
 }
 
+async function getByUser(req, res, next) {
+  try {
+    res.json(await campaign.getByUser(req.params.user));
+  } catch (err) {
+    console.error(`Error while getting daret by user`, err.message);
+    next(err);
+  }
+}
+
 async function create(req, res, next) {
   try {
     res.json(await campaign.create(req.body));
@@ -50,5 +59,6 @@ module.exports = {
   create,
   update,
   remove,
-  getByAddress
+  getByAddress,
+  getByUser
 };
