@@ -45,7 +45,7 @@ async function getMultiple2(page = 1, userAddress = null) {
 
 async function getByAddress(address) {
   const rows = await db.query(
-    'SELECT * FROM daret WHERE address = $1',
+    'SELECT * FROM daret WHERE creator = $1',
     [address]
   );
   const data = helper.emptyOrRows(rows);
