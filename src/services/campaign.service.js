@@ -19,7 +19,7 @@ async function getMultiple(page = 1){
 
 async function getByAddress(address) {
   const rows = await db.query(
-    'SELECT * FROM campaign WHERE address = $1',
+    'SELECT * FROM campaign WHERE creator = $1',
     [address]
   );
   const data = helper.emptyOrRows(rows);
