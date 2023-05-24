@@ -53,10 +53,8 @@ async function getByAddress(address) {
 }
 
 async function getByUser(user) {
-
-  
   const rows = await db.query(
-    'SELECT * FROM daret WHERE creator = $1',
+    'SELECT * FROM daret WHERE (creator = $1 AND invitation_required = TRUE) OR invitation_required = FALSE',
     [user]
   );
   const data = helper.emptyOrRows(rows);
