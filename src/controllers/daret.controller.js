@@ -22,7 +22,6 @@ async function get2(req, res, next) {
 async function getByAddress(req, res, next) {
   try {
     res.json(await daret.getByAddress(req.params.address));
-    console.log(1)
 
   } catch (err) {
     console.error(`Error while getting daret by address`, err.message);
@@ -33,7 +32,6 @@ async function getByAddress(req, res, next) {
 async function getByUser(req, res, next) {
   try {
     res.json(await daret.getByUser(req.params.user));
-    console.log(2)
 
   } catch (err) {
     console.error(`Error while getting daret by user`, err.message);
