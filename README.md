@@ -1,5 +1,5 @@
 # Backend for Daret
-This repository contains the backend for Daret project. It is a Node.js application that uses Express as a web framework and MySQL as a database.  It is deployed on Heroku.
+This repository contains the backend for Daret project. It is a Node.js application that uses ExpressJS as a web framework and PostgresQl as a database.
 
 ## Getting Started
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
@@ -26,14 +26,19 @@ Check .env.example for the required environment variables.
 
 The backend should now be accessible at http://localhost:8080/.
 
-## Routes
+## Environment Variables
 
-- GET /: A test route that returns a message indicating that the server is running.
-- POST /daret: Creates a new daret.
-- GET /daret/:daretId: Retrieves information about the specified daret.
-- POST /campaign: Creates a new campaign.
-- GET /campaign/:campaignAddress: Retrieves information about the specified campaign.
-- POST /faucet: Sends 0.001 ETH to the specified address on Optimism Goerli. 
+To run this project, you need to add the following environment variables to your .env file
+
+`DB_HOST`: Hostname of the database server.
+<br>`DB_USER`: Username for the database.
+<br>`DB_PASSWORD`: Password for the database.
+<br>`DB_NAME`: Name of the database.
+<br>`DB_PORT`: Port of the database server.
+<br>`SUPABASE_URL`: URL of the Supabase server.
+<br>`SUPABASE_KEY`: API key for the Supabase server.
+<br>`INFURA_PROJECT_ID`: Project ID for the Infura server.
+<br>`PRIVATE_KEY`: Private key of the account used to deploy the smart contracts.
 
 ## License
 
