@@ -61,6 +61,16 @@ async function getByUser(user) {
   return data;
 }
 
+async function getByCreator(user) {
+  const rows = await db.query(
+    'SELECT * FROM daret WHERE creator = $1',
+    [user]
+  );
+  const data = helper.emptyOrRows(rows);
+  return data;
+}
+
+
 async function create(daret){
   const result = await db.query(
     `INSERT INTO daret 
@@ -155,5 +165,6 @@ module.exports={
   remove,
   getByAddress,
   getByUser,
+  getByCreator,
   updateCompleted, // Add this line
 }

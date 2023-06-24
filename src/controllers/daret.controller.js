@@ -39,6 +39,16 @@ async function getByUser(req, res, next) {
   }
 }
 
+async function getByCreator(req, res, next) {
+  try {
+    res.json(await daret.getByCreator(req.params.user));
+
+  } catch (err) {
+    console.error(`Error while getting daret by user`, err.message);
+    next(err);
+  }
+}
+
 
 async function create(req, res, next) {
   try {
@@ -83,5 +93,6 @@ module.exports = {
   update,
   remove,
   getByUser,
+  getByCreator,
   getByAddress // Add this line
 };
